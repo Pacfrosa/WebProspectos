@@ -4,12 +4,15 @@
     ViewBag.Title = "Lista de prospectos";
 }
 
-<h2>Lista de prospectos</h2>
-
+<div class="d-grid gap-2 d-md-flex justify-content-between">
+    <h2>Lista de prospectos</h2>
+    <a class="btn btn-primary m-1" href="@Url.Content("~/Prospectos/Nuevo")"><i class="fa-solid fa-plus"></i> Nuevo</a>
+</div>
+<br />
 <div class="row">
     <div class="col-12">
         <table class="table table-bordered">
-            <thead class="table-dark text-white-50">
+            <thead class="table-dark">
                 <tr>
                     <th>Nombre</th>
                     <th>Primer apellido</th>
@@ -25,7 +28,7 @@
                     <td>@objElemento.PrimerApellido</td>
                     <td>@objElemento.SegundoApellido</td>
                     <td>@objElemento.Estatus</td>
-                    <td class="text-center"><a class="btn btn-primary">Ver detalles</a></td>
+                    <td class="text-center"><a class="btn btn-secondary">Ver detalles</a></td>
                 </tr>
             }
         </table>
