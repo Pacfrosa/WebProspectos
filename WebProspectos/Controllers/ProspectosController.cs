@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -66,6 +67,32 @@ namespace WebProspectos.Controllers
                 db.SaveChanges();
             }
             return Redirect(Url.Content("~/Prospectos/"));
+        }
+        [HttpGet]
+        public ActionResult Editar(int Id)
+        {
+            EditarProspectoViewModel model = new EditarProspectoViewModel();
+            using (var db = new WebContext())
+            {
+                var objResultado = db.Personas.Find(Id);
+                if (objResultado == null)
+                {
+                    return Redirect(Url.Content("~/Prospectos/"));
+                }
+                model.Id = Id;
+                model.Nombre = objResultado.Nombre;
+                model.PrimerApellido = objResultado.PrimerApellido;
+                model.SegundoApellido = objResultado.SegundoApellido;
+                Direccion objDireccion = db.Direcciones.Where(d => d.PersonaId == Id).First();
+                model.Calle = objDireccion.Calle;
+                model.Numero = objDireccion.Numero;
+                model.Colonia = objDireccion.Colonia;
+                model.CodigoPostal = objDireccion.CodigoPostal;
+                model.Telefono = objResultado.Telefono;
+                model.Rfc = objResultado.Rfc;
+                model.Estatus = objResultado.Estatus;
+            }
+            return View(model);
         }
     }
 }

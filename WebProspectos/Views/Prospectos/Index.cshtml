@@ -28,7 +28,9 @@
                     <td>@objElemento.PrimerApellido</td>
                     <td>@objElemento.SegundoApellido</td>
                     <td>@objElemento.Estatus</td>
-                    <td class="text-center"><a class="btn btn-secondary">Ver detalles</a></td>
+                    <td class="text-center">
+                        <input onclick="document.location.href='@Url.Content("~/Prospectos/Editar/" + objElemento.Id)'" type="button" value="Ver" class="btn btn-secondary" />
+                    </td>
                 </tr>
             }
         </table>
