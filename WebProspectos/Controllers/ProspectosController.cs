@@ -65,7 +65,7 @@ namespace WebProspectos.Controllers
                     Estatus = "Enviado",
                     Archivos = new List<Archivos>()
                 };
-                if (lsArchivos != null)
+                if (lsArchivos.First() != null)
                 {
                     foreach (HttpPostedFileBase archivo in lsArchivos)
                     {
@@ -90,8 +90,12 @@ namespace WebProspectos.Controllers
             return Redirect(Url.Content("~/Prospectos/"));
         }
         [HttpGet]
-        public ActionResult Editar(int Id)
+        public ActionResult Editar(int? Id)
         {
+            if (Id == null)
+            {
+                return Redirect(Url.Content("~/Prospectos/"));
+            }
             EditarProspectoViewModel model = new EditarProspectoViewModel();
             List<string> listaDeElementos = new List<string>
             {
@@ -106,7 +110,7 @@ namespace WebProspectos.Controllers
                 {
                     return Redirect(Url.Content("~/Prospectos/"));
                 }
-                model.Id = Id;
+                model.Id = (int)Id;
                 model.Nombre = objResultado.Nombre;
                 model.PrimerApellido = objResultado.PrimerApellido;
                 model.SegundoApellido = objResultado.SegundoApellido;
@@ -118,8 +122,39 @@ namespace WebProspectos.Controllers
                 model.Telefono = objResultado.Telefono;
                 model.Rfc = objResultado.Rfc;
                 model.Estatus = objResultado.Estatus;
+                model.Comentarios = objResultado.Comentarios;
+                model.lsArchivos = db.Archivos.Where(d => d.Persona.Id == Id).ToList();
+
             }
             return View(model);
+        }
+        public ActionResult Editar(EditarProspectoViewModel objProspecto)
+        {
+            if (objProspecto == null)
+            {
+                return Redirect(Url.Content("~/Prospectos/"));
+            }
+            using (var db = new WebContext())
+            {
+                var objPersona = db.Personas.Find(objProspecto.Id);
+                objPersona.Estatus = objProspecto.Estatus;
+                objPersona.Comentarios = objProspecto.Comentarios;
+                db.Entry(objPersona).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+            return Redirect(Url.Content("~/Prospectos/"));
+        }
+        public ActionResult DescargarArchivo(int? id)
+        {
+            using (var bd = new WebContext())
+            {
+                var objResultado = bd.Archivos.Find((int)id);
+                if (objResultado != null)
+                {
+                    return File(objResultado.DatosArchivo, "application/octet-stream", objResultado.Nombre);
+                }
+            }
+            return Redirect(Url.Content("~/Prospectos/"));
         }
     }
 }

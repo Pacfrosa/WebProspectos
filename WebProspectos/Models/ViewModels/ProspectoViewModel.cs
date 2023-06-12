@@ -57,8 +57,7 @@ namespace WebProspectos.Models.ViewModels
         public string Rfc { get; set; }
         [Required]
         [StringLength(15)]
-        public string Estatus { get; set; } = "Activo";
-        public IFormFile Archivo { get; set; }
+        public string Estatus { get; set; } = "Enviado";
     }
     public class EditarProspectoViewModel
     {
@@ -111,6 +110,10 @@ namespace WebProspectos.Models.ViewModels
         public string Rfc { get; set; }
         [Required]
         [StringLength(15)]
-        public string Estatus { get; set; } = "Enviado";
+        public string Estatus { get; set; }
+        [Display(Name = "Comentarios")]
+        [StringLength(50)]
+        public string Comentarios { get; set; }
+        public IEnumerable<Archivos> lsArchivos { get; set; }
     }
 }
