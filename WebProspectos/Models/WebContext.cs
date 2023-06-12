@@ -15,5 +15,6 @@ namespace WebProspectos.Models
         }
         public DbSet<Persona> Personas { get; set; }
         public DbSet<Direccion> Direcciones { get; set; }
+        public DbSet<Archivos> Archivos { get; set; }
     }
 }

@@ -6,7 +6,7 @@
 <h2>Nuevo prospecto</h2>
 <div class="row">
     <div class="col-md-12">
-        @using (Html.BeginForm("Nuevo", "Prospectos", FormMethod.Post, new { role = "form", @class = "" }))
+        @using (Html.BeginForm("Nuevo", "Prospectos", FormMethod.Post, new { role = "form", @enctype = "multipart/form-data", @class = "" }))
         {
             @Html.AntiForgeryToken()
 
@@ -57,6 +57,11 @@
             @Html.LabelFor(d => d.Rfc)
             @Html.TextBoxFor(d => d.Rfc, new { @class = "form-control" })
             @Html.ValidationMessage("Rfc", new { @class = "text-danger" }) <br />
+
+            <div>
+                <label>Archivos</label>
+            </div> 
+            <input name="lsArchivos" type="file" multiple class="form-control"/>
 
             <div class="d-flex col-3 justify-content-between mt-2">
                 <a class="btn btn-warning">Salir</a>

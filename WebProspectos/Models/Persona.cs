@@ -27,5 +27,7 @@ namespace WebProspectos.Models
         [StringLength(15)]
         public string Estatus { get; set; }
         public ICollection<Direccion> Direcciones { get; set; }
+        public ICollection<Archivos> Archivos { get; set; }
+
     }
 }

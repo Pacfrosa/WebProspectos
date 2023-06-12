@@ -1,6 +1,7 @@
 ﻿using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -36,7 +37,7 @@ namespace WebProspectos.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Nuevo(ProspectoViewModel objProspectos)
+        public ActionResult Nuevo(ProspectoViewModel objProspectos, IEnumerable<HttpPostedFileBase>  lsArchivos)
         {
             if (!ModelState.IsValid)
             {
@@ -51,7 +52,7 @@ namespace WebProspectos.Controllers
                     SegundoApellido = objProspectos.SegundoApellido,
                     Direcciones = new List<Direccion>()
                     {
-                        new Direccion() 
+                        new Direccion()
                         {
                             Calle = objProspectos.Calle,
                             Numero = objProspectos.Numero,
@@ -61,8 +62,28 @@ namespace WebProspectos.Controllers
                     },
                     Telefono = objProspectos.Telefono,
                     Rfc = objProspectos.Rfc,
-                    Estatus = "Activo"
+                    Estatus = "Enviado",
+                    Archivos = new List<Archivos>()
                 };
+                if (lsArchivos != null)
+                {
+                    foreach (HttpPostedFileBase archivo in lsArchivos)
+                    {
+                        byte[] contenido;
+                        using (var lector = new BinaryReader(archivo.InputStream))
+                        {
+                            contenido = lector.ReadBytes(archivo.ContentLength);
+                        }
+                        objPersona.Archivos.Add
+                            (
+                                new Archivos()
+                                {
+                                    Nombre = archivo.FileName,
+                                    DatosArchivo= contenido
+                                }
+                            );
+                    }
+                }
                 db.Personas.Add(objPersona);
                 db.SaveChanges();
             }
@@ -72,6 +93,12 @@ namespace WebProspectos.Controllers
         public ActionResult Editar(int Id)
         {
             EditarProspectoViewModel model = new EditarProspectoViewModel();
+            List<string> listaDeElementos = new List<string>
+            {
+                "Autorizado",
+                "Rechazado"
+            };
+            ViewBag.ListaDeElementos = new SelectList(listaDeElementos);
             using (var db = new WebContext())
             {
                 var objResultado = db.Personas.Find(Id);
