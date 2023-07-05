@@ -3,75 +3,68 @@
     ViewBag.Title = "Nuevo prospecto";
 }
 
+
 <h2>Nuevo prospecto</h2>
-<div class="row">
-    <div class="col-md-12">
-        @using (Html.BeginForm("Nuevo", "Prospectos", FormMethod.Post, new { role = "form", @enctype = "multipart/form-data", @class = "" }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.LabelFor(d => d.Nombre)
-            @Html.TextBoxFor(d => d.Nombre, new { @class = "form-control" })
-            @Html.ValidationMessage("Nombre", new { @class = "text-danger" }) <br />
-
-            @Html.LabelFor(d => d.PrimerApellido)
-            @Html.TextBoxFor(d => d.PrimerApellido, new { @class = "form-control" })
-            @Html.ValidationMessage("PrimerApellido", new { @class = "text-danger" }) <br />
-
-
-
-            <div>
-                @Html.LabelFor(d => d.SegundoApellido)
-                <label class="text-secondary">(Opcional)</label>
+<br />
+<div class="col-7">
+    <div class="d-flex justify-content-center">
+        <form class="row g-3 border rounded" action="/Prospectos/Nuevo" method="post" enctype="multipart/form-data">
+            <div class="col-md-12">
+                <label class="form-label">Nombre</label>
+                @Html.TextBoxFor(d => d.Nombre, new { @class = "form-control" + (ViewData.ModelState["Nombre"]?.Errors.Count > 0 ? " is-invalid" : "") })
             </div>
-            @Html.TextBoxFor(d => d.SegundoApellido, new { @class = "form-control" })
-
-
-            @Html.LabelFor(d => d.Calle)
-            @Html.TextBoxFor(d => d.Calle, new { @class = "form-control" })
-            @Html.ValidationMessage("Calle", new { @class = "text-danger" }) <br />
-
-
-            @Html.LabelFor(d => d.Numero)
-            @Html.TextBoxFor(d => d.Numero, new { @class = "form-control" })
-            @Html.ValidationMessage("Numero", new { @class = "text-danger" }) <br />
-
-
-            @Html.LabelFor(d => d.Colonia)
-            @Html.TextBoxFor(d => d.Colonia, new { @class = "form-control" })
-            @Html.ValidationMessage("Colonia", new { @class = "text-danger" }) <br />
-
-
-            @Html.LabelFor(d => d.CodigoPostal)
-            @Html.TextBoxFor(d => d.CodigoPostal, new { @class = "form-control" })
-            @Html.ValidationMessage("CodigoPostal", new { @class = "text-danger" }) <br />
-
-
-            @Html.LabelFor(d => d.Telefono)
-            @Html.TextBoxFor(d => d.Telefono, new { @class = "form-control" })
-            @Html.ValidationMessage("Telefono", new { @class = "text-danger" }) <br />
-
-
-            @Html.LabelFor(d => d.Rfc)
-            @Html.TextBoxFor(d => d.Rfc, new { @class = "form-control" })
-            @Html.ValidationMessage("Rfc", new { @class = "text-danger" }) <br />
-
+            <div class="col-md-6">
+                <label class="form-label">Primer apellido</label>
+                @Html.TextBoxFor(d => d.PrimerApellido, new { @class = "form-control" + (ViewData.ModelState["PrimerApellido"]?.Errors.Count > 0 ? " is-invalid" : "") })
+            </div>
+            <div class="col-md-6">
+                <div>
+                    <label class="form-label">Segundo apellido</label>
+                    <label class="text-secondary">(Opcional)</label>
+                </div>
+                @Html.TextBoxFor(d => d.SegundoApellido, new { @class = "form-control" })
+            </div>
+            <div class="col-md-12">
+                <label class="form-label">Telefono</label>
+                @Html.TextBoxFor(d => d.Telefono, new { @class = "form-control" + (ViewData.ModelState["Telefono"]?.Errors.Count > 0 ? " is-invalid" : ""), @placeholder = "000-000-00-00" })
+            </div>
+            <div class="col-md-12">
+                <label class="form-label">RFC</label>
+                @Html.TextBoxFor(d => d.Rfc, new { @class = "form-control" + (ViewData.ModelState["Rfc"]?.Errors.Count > 0 ? " is-invalid" : "") })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Calle</label>
+                @Html.TextBoxFor(d => d.Calle, new { @class = "form-control" + (ViewData.ModelState["Calle"]?.Errors.Count > 0 ? " is-invalid" : "") })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Numero</label>
+                @Html.TextBoxFor(d => d.Numero, new { @class = "form-control" + (ViewData.ModelState["Numero"]?.Errors.Count > 0 ? " is-invalid" : "") })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Colonia</label>
+                @Html.TextBoxFor(d => d.Colonia, new { @class = "form-control" + (ViewData.ModelState["Colonia"]?.Errors.Count > 0 ? " is-invalid" : "") })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Codigo postal</label>
+                @Html.TextBoxFor(d => d.CodigoPostal, new { @class = "form-control" + (ViewData.ModelState["CodigoPostal"]?.Errors.Count > 0 ? " is-invalid" : "") })
+            </div>
             <div>
                 <label>Archivos</label>
+                <input name="lsArchivos" type="file" multiple class="form-control" />
             </div>
-            <input name="lsArchivos" type="file" multiple class="form-control" />
 
-            <div class="d-flex col-3 justify-content-between mt-2">
-                <button type="button" class="btn btn-warning" onclick="confirmarSalida()">Salir</button>
+            <div class="d-flex col-md-5 justify-content-md-between mt-3 mb-3">
+                <button type="button" class="btn btn-outline-secondary" onclick="confirmarSalida()">Salir</button>
                 <input type="submit" class="btn btn-success" value="Guardar" />
             </div>
-        }
+        </form>
     </div>
-    <script>
-        function confirmarSalida() {
-            if (confirm('¿Está seguro de que desea salir? (ningún dato será guardado)')) {
-                window.location.href = '/Prospectos'; // Reemplaza '/Home/Salir' con la URL correspondiente a la acción de salida en tu controlador
-            }
-        }
-    </script>
 </div>
+<script>
+    function confirmarSalida() {
+        if (confirm('¿Está seguro de que desea salir? (ningún dato será guardado)')) {
+            window.location.href = '/Prospectos'; // Reemplaza '/Home/Salir' con la URL correspondiente a la acción de salida en tu controlador
+        }
+    }
+</script>
 
