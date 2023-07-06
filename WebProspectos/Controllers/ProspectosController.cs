@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using WebProspectos.Models;
 using WebProspectos.Models.TableViewModels;
 using WebProspectos.Models.ViewModels;
+using CurrieTechnologies.Razor.SweetAlert2;
+using Microsoft.JSInterop;
 
 namespace WebProspectos.Controllers
 {

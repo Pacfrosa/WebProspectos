@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Optimization;
+using System.Web.Services.Description;
 
 namespace WebProspectos
 {
@@ -25,6 +26,7 @@ namespace WebProspectos
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+            
         }
     }
 }

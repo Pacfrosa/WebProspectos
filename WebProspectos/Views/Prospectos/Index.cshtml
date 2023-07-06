@@ -24,12 +24,15 @@
             @foreach (var objElemento in Model)
             {
                 <tr>
-                    <td>@objElemento.Nombre</td>
-                    <td>@objElemento.PrimerApellido</td>
-                    <td>@objElemento.SegundoApellido</td>
-                    <td>@objElemento.Estatus</td>
-                    <td class="text-center">
-                        <input onclick="document.location.href='@Url.Content("~/Prospectos/Editar/" + objElemento.Id)'" type="button" value="Ver" class="btn btn-secondary" />
+                    <td class="align-middle">@objElemento.Nombre</td>
+                    <td class="align-middle">@objElemento.PrimerApellido</td>
+                    <td class="align-middle">@objElemento.SegundoApellido</td>
+                    <td class="align-middle text-center">
+                        <span class="badge rounded-pill @(objElemento.Estatus == "Autorizado" ? "text-bg-success" : objElemento.Estatus == "Rechazado" ? "text-bg-danger" : "text-bg-secondary")">@objElemento.Estatus</span>
+                    </td>
+                    <td  class="align-middle text-center">
+                        <a class="btn btn-link" href="@Url.Content("~/Prospectos/Editar/" + objElemento.Id)">Ver</a>
+
                     </td>
                 </tr>
             }

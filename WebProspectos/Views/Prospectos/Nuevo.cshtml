@@ -3,7 +3,6 @@
     ViewBag.Title = "Nuevo prospecto";
 }
 
-
 <h2>Nuevo prospecto</h2>
 <br />
 <div class="col-7">
@@ -25,7 +24,7 @@
                 @Html.TextBoxFor(d => d.SegundoApellido, new { @class = "form-control" })
             </div>
             <div class="col-md-12">
-                <label class="form-label">Telefono</label>
+                <label class="form-label">Teléfono</label>
                 @Html.TextBoxFor(d => d.Telefono, new { @class = "form-control" + (ViewData.ModelState["Telefono"]?.Errors.Count > 0 ? " is-invalid" : ""), @placeholder = "000-000-00-00" })
             </div>
             <div class="col-md-12">
@@ -37,7 +36,7 @@
                 @Html.TextBoxFor(d => d.Calle, new { @class = "form-control" + (ViewData.ModelState["Calle"]?.Errors.Count > 0 ? " is-invalid" : "") })
             </div>
             <div class="col-md-6">
-                <label class="form-label">Numero</label>
+                <label class="form-label">Número</label>
                 @Html.TextBoxFor(d => d.Numero, new { @class = "form-control" + (ViewData.ModelState["Numero"]?.Errors.Count > 0 ? " is-invalid" : "") })
             </div>
             <div class="col-md-6">
@@ -45,7 +44,7 @@
                 @Html.TextBoxFor(d => d.Colonia, new { @class = "form-control" + (ViewData.ModelState["Colonia"]?.Errors.Count > 0 ? " is-invalid" : "") })
             </div>
             <div class="col-md-6">
-                <label class="form-label">Codigo postal</label>
+                <label class="form-label">Código postal</label>
                 @Html.TextBoxFor(d => d.CodigoPostal, new { @class = "form-control" + (ViewData.ModelState["CodigoPostal"]?.Errors.Count > 0 ? " is-invalid" : "") })
             </div>
             <div>
@@ -62,9 +61,16 @@
 </div>
 <script>
     function confirmarSalida() {
-        if (confirm('¿Está seguro de que desea salir? (ningún dato será guardado)')) {
-            window.location.href = '/Prospectos'; // Reemplaza '/Home/Salir' con la URL correspondiente a la acción de salida en tu controlador
-        }
+        Swal.fire({
+            title: '¿Está seguro de que desea salir? (ningún dato será guardado)',
+            showCancelButton: true,
+            icon: 'question',
+            confirmButtonText: 'Si',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '/Prospectos';
+            }
+        })
     }
 </script>
 
